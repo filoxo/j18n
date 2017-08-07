@@ -9,24 +9,29 @@ const { argv } = require('yargs')
     .help()
 
 var fs = require('fs')
-const { f } = argv,
-  j = JSON.parse(fs.readFileSync(f, 'utf8'))
-let jt = {},
-    o = f
-if (argv._[0] === 'nest') {
-  jt = nest(j)
-  o = o.replace('.flat', '')
+
+main();
+
+function main() {
+  const { f } = argv,
+    j = JSON.parse(fs.readFileSync(f, 'utf8'))
+  let jt = {},
+      o = f
+  if (argv._[0] === 'nest') {
+    jt = nest(j)
+    o = o.replace('.flat', '')
+  }
+  if (argv._[0] === 'flat') {
+    jt = flat(j)
+    o = o.split('.')
+    o.splice(o.length - 1, 0, 'flat')
+    o = o.join('.')
+  }
+  fs.writeFile(o, JSON.stringify(jt, null, 2), (err) => {
+    if (err) { return console.error(err) }
+    else { return console.log('Data written successfully!') }
+  });
 }
-if (argv._[0] === 'flat') {
-  jt = flat(j)
-  o = o.split('.')
-  o.splice(o.length - 1, 0, 'flat')
-  o = o.join('.')
-}
-fs.writeFile(o, JSON.stringify(jt, null, 2), (err) => {
-  if (err) { return console.error(err) }
-  else { return console.log('Data written successfully!') }
-});
 
 function nest(data) {
   if (Object(data) !== data || Array.isArray(data))
