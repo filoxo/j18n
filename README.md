@@ -2,6 +2,47 @@
 
 j18n is short for *json transformation*. This is a small util for flattening or nesting json keys. For example, Ancestry's Rosetta requires flat keys for i18n files, while it is much easier to organize them as nested keys for developers.
 
+It'll transform a structures like
+
+<style>
+.example-tbl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.example-tbl pre {
+  width: 45%;
+  max-width: 270px;
+}
+</style>
+<div class="example-tbl">
+
+    "step": {
+      "1": {
+        "desc": "Lorem ipsum",
+        "heading": "Dolor amet"
+      },
+      "2": {
+        "desc": "Lorem ipsum",
+        "heading": "Dolor amet"
+      },
+      "3": {
+        "desc": "Lorem ipsum",
+        "heading": "Dolor amet"
+      }
+    }
+
+<span>&nbsp;↔&nbsp;</span>
+
+    "step.1.desc": "Lorem ipsum",
+    "step.1.heading": "hDolor amet",
+    "step.2.desc": "Lorem ipsum",
+    "step.2.heading": "Dolor amet",
+    "step.3.desc": "Lorem ipsum",
+    "step.3.heading": "Dolor amet"
+
+</div>
+
 ### Usage
 
     j18n [flat/nest] -f [path]
