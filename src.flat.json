@@ -1,0 +1,14 @@
+{
+  "title": "title",
+  "intro": "intro",
+  "step.1.desc": "desc",
+  "step.1.heading": "heading",
+  "step.2.desc": "desc",
+  "step.2.heading": "heading",
+  "step.3.desc": "desc",
+  "step.3.heading": "heading",
+  "action.next": "next",
+  "action.skip": "skip",
+  "action.done": "done",
+  "action.back": "back"
+}

@@ -1,0 +1,37 @@
+{
+  "pageTitle": "Gather DNA",
+  "pageIntro": "Step {{step}} of {{length}}",
+  "unsupportedVideo": "Your browser does not support the video tag.",
+  "step": {
+    "1": {
+      "desc": "Fill the tube until your saliva (not including bubbles) is at or just above the wavy line. It's easy&mdash;that's less than 1/4 teaspoon. <br/><span class=\"underlined\">Do not overfill.</span>",
+      "heading": "Fill the tube with saliva to the black wavy line."
+    },
+    "2": {
+      "desc": "Remove the funnel from the tube. Screw on the enclosed cap tightly to release the solution that will stabilize the DNA in your saliva. <br/><small class=\"topSpacing italic\">Warning: Do not ingest the stabilizing solution in the tube cap. If your skin, eyes or mouth come in contact with the solution, wash with water. Keep DNA kit out of reach of children.</small>",
+      "heading": "Replace the funnel with the cap."
+    },
+    "3": {
+      "desc": "You will know it works when the blue solution from the cap has emptied into the tube.",
+      "heading": "Tighten to release stabilizing fluid."
+    },
+    "4": {
+      "desc": "This will ensure your sample mixes thoroughly with the stabilizing solution, so our lab can best process your sample.",
+      "heading": "Shake the tube for at least 5 seconds."
+    },
+    "5": {
+      "desc": "Place the sample inside the collection bag provided in your DNA kit. Seal the bag with the adhesive strip.",
+      "heading": "Place the tube in the collection bag."
+    },
+    "6": {
+      "desc": "Place your sample in the prepaid mailing box. Seal the box with the adhesive strip and mail it in.<br/><br/>Expect results in <span class=\"bold\">6-8 weeks.</span>",
+      "heading": "Mail in your sample."
+    }
+  },
+  "action": {
+    "next": "Next",
+    "skip": "Skip Instructions",
+    "done": "All Done",
+    "back": "Back"
+  }
+}

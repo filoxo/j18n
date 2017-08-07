@@ -1,0 +1,20 @@
+{
+  "name": "j18n",
+  "version": "1.0.0",
+  "description": "A tool to transform json files for i18n tools. j18n is short of 'json transformation'.",
+  "bin": {
+    "j18n": "index.js"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Carlos Filoteo",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^8.0.2"
+  },
+  "devDependencies": {
+    "hashish": "0.0.4",
+    "mocha": "^3.4.2"
+  }
+}
