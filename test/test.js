@@ -1,23 +1,24 @@
 const assert = require('assert'),
-    j18n = require('../index.js'),
-    {checkOutput} = require('./utils')
-
-const errMsg = `Usage: node_modules/mocha/bin/_mocha [flat/nest] -f [path]
-
-Options:
-  -f, --file  File to transform                                       [required]
-  --help      Show help                                                [boolean]
-
-Not enough non-option arguments: got 0, need at least 1`
+    { checkOutput, lastLine } = require('./utils'),
+    { exec } = require('child_process')
 
 describe('j18n', () => {
   describe('#nest', () => {
-    it('should error if no file', () => {
-      const r = checkUsage(() => j18n(['nest']))
-      console.log("checkUsage result", r)
-      // assert.throws(j18n(['nest']), errMsg)
-    });
+    it('should error if no file', (done) => {
+      const e = `Missing required argument: f`
+      exec('j18n nest', (error, stdout, stderr) => {
+        assert.equal(lastLine(stderr), e)
+        done()
+      })
+    })
   });
   describe('#flat', () => {
+    it('should error if no file', (done) => {
+      const e = `Missing required argument: f`
+      exec('j18n flat', (error, stdout, stderr) => {
+        assert.equal(lastLine(stderr), e)
+        done()
+      })
+    })
   });
 });
