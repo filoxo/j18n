@@ -75,3 +75,10 @@ exports.checkOutput = function (f, argv, cb) {
     }
   }
 }
+
+exports.lastLine = function(str) {
+  return str
+          .split('\n')
+          .filter(l => l != '')
+          .pop()
+}
