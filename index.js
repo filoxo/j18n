@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { argv } = require('yargs')
-    .usage('Usage: $0 [flat/nest] -f [path]')
+    .usage('Usage: j18n [flat/nest] -f [path]')
     .demandCommand(1)
     .alias('f', 'file')
     .nargs('f', 1)
