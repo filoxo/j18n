@@ -19,23 +19,26 @@ const { argv } = require('yargs')
 main()
 
 function main() {
-  const { file, _: [cmd] } = argv,
-    j = JSON.parse(fs.readFileSync(file, 'utf8'))
-  let jt = {},
-    o = file
-  if (cmd === 'nest') {
-    jt = nest(j)
-    o = o.replace('.flat', '')
-  } else if (cmd === 'flat') {
-    jt = flat(j)
-    o = o.split('.')
-    o.splice(o.length - 1, 0, 'flat')
-    o = o.join('.')
-  }
-  fs.writeFile(o, JSON.stringify(jt, null, 2), err => {
-    return err
-    ? console.error(err)
-    : console.log('Data written successfully!')
+  const { file, _: [cmd] } = argv
+  fs.readFile(file, 'utf8', (err, data) => {
+    if (err) return console.error(err.message)
+    const j = JSON.parse(data)
+    let jt = {},
+      o = file
+    if (cmd === 'nest') {
+      jt = nest(j)
+      o = o.replace('.flat', '')
+    } else if (cmd === 'flat') {
+      jt = flat(j)
+      o = o.split('.')
+      o.splice(o.length - 1, 0, 'flat')
+      o = o.join('.')
+    }
+    fs.writeFile(o, JSON.stringify(jt, null, 2), err => {
+      return err
+        ? console.error(err)
+        : console.log('Data written successfully!')
+    })
   })
 }
 

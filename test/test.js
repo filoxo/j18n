@@ -49,5 +49,13 @@ describe('j18n', () => {
         done()
       })
     })
+
+    it('should error if --file does not exist', (done) => {
+      const e = `ENOENT: no such file or directory, open 'noExist.json'`
+      exec('j18n flat --file noExist.json', (error, stdout, stderr) => {
+        assert.equal(lastLine(stderr), e)
+        done()
+      })
+    })
   })
 });
