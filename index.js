@@ -9,6 +9,7 @@ const { argv } = require('yargs')
         alias: 'f',
         describe: 'File to transform',
         demandOption: true,
+        requiresArg: true,
         nargs: 1
       }
     })
@@ -32,11 +33,9 @@ function main() {
     o = o.join('.')
   }
   fs.writeFile(o, JSON.stringify(jt, null, 2), err => {
-    if (err) {
-      return console.error(err)
-    } else {
-      return console.log('Data written successfully!')
-    }
+    return err
+    ? console.error(err)
+    : console.log('Data written successfully!')
   })
 }
 
