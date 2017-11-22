@@ -1,6 +1,6 @@
 # j18n
 
-j18n is short for *json transformation*. This is a small util for flattening or nesting json keys. For example, Ancestry's Rosetta requires flat keys for i18n files, while it is much easier to organize them as nested keys for developers.
+j18n is short for *json transformation*. This is a small util for flattening or nesting json keys. For example, some translation tools require flat keys for i18n files, while it is much easier to organize them as nested keys for developers.
 
 It'll transform a structures like
 
