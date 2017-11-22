@@ -6,7 +6,7 @@ const assert = require('assert'),
 describe('j18n', () => {
   describe('#nest', () => {
     it('should error if no file', (done) => {
-      const e = `Missing required argument: f`
+      const e = `Missing required argument: file`
       exec('j18n nest', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
         done()
@@ -15,7 +15,7 @@ describe('j18n', () => {
   });
   describe('#flat', () => {
     it('should error if no file', (done) => {
-      const e = `Missing required argument: f`
+      const e = `Missing required argument: file`
       exec('j18n flat', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
         done()
