@@ -82,3 +82,10 @@ exports.lastLine = function(str) {
           .filter(l => l != '')
           .pop()
 }
+
+exports.firstLine = function(str) {
+  return str
+          .split('\n')
+          .filter(l => l != '')
+          .shift()
+}
