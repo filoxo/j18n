@@ -29,7 +29,12 @@ function main() {
   const { file, _: [cmd] } = argv
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) return console.error(err.message)
-    const j = JSON.parse(data)
+    let j
+    try {
+      j = JSON.parse(data)
+    } catch(e) {
+      return console.error(`j18n could not parse the JSON in ${file}\n`, e)
+    }
     const { output } = argv
     let jt = {},
       o = output || file

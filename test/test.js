@@ -1,5 +1,5 @@
 const assert = require('assert'),
-  { checkOutput, lastLine } = require('./utils'),
+  { checkOutput, lastLine, firstLine } = require('./utils'),
   { existsSync, readFileSync, unlink } = require('fs'),
   { exec } = require('child_process')
 
@@ -54,6 +54,30 @@ describe('j18n', () => {
       const e = `ENOENT: no such file or directory, open 'noExist.json'`
       exec('j18n flat --file noExist.json', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
+        done()
+      })
+    })
+
+    it('should error if --file is unreadable', done => {
+      const e = `ENOENT: no such file or directory, open 'noExist.json'`
+      exec('j18n flat --file noExist.json', (error, stdout, stderr) => {
+        assert.equal(lastLine(stderr), e)
+        done()
+      })
+    })
+
+    it('should error if --file has syntax error', done => {
+      const e = `j18n could not parse the JSON in test/badSyntax.json`
+      exec('j18n flat --file test/badSyntax.json', (error, stdout, stderr) => {
+        assert.equal(firstLine(stderr), e)
+        done()
+      })
+    })
+
+    it('should error if --file json is incomplete', done => {
+      const e = `j18n could not parse the JSON in test/badValue.json`
+      exec('j18n flat --file test/badValue.json', (error, stdout, stderr) => {
+        assert.equal(firstLine(stderr), e)
         done()
       })
     })
