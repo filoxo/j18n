@@ -1,22 +1,27 @@
 #!/usr/bin/env node
 const { argv } = require('yargs')
-  .usage('Usage: j18n [flat/nest] -f [file]')
-  .demandCommand(1)
-  .alias('f', 'file')
-  .nargs('f', 1)
-  .describe('f', 'File to transform')
-  .demandOption(['f'])
-  .help()
-
-var fs = require('fs')
+    .usage('Usage: j18n nest -f [file]')
+    .command('flat', 'Flatten json key structures')
+    .command('nest', 'Nest json key structures')
+    .demandCommand(1, 'You must specify flat or nest command')
+    .options({
+      file: {
+        alias: 'f',
+        describe: 'File to transform',
+        demandOption: true,
+        nargs: 1
+      }
+    })
+    .help(),
+  fs = require('fs')
 
 main()
 
 function main() {
-  const { f, _: [cmd] } = argv,
-    j = JSON.parse(fs.readFileSync(f, 'utf8'))
+  const { file, _: [cmd] } = argv,
+    j = JSON.parse(fs.readFileSync(file, 'utf8'))
   let jt = {},
-    o = f
+    o = file
   if (cmd === 'nest') {
     jt = nest(j)
     o = o.replace('.flat', '')
