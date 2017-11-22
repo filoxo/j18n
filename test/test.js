@@ -1,20 +1,20 @@
 const assert = require('assert'),
-    { checkOutput, lastLine } = require('./utils'),
-    { existsSync, readFileSync, unlink } = require('fs'),
-    { exec } = require('child_process')
+  { checkOutput, lastLine } = require('./utils'),
+  { existsSync, readFileSync, unlink } = require('fs'),
+  { exec } = require('child_process')
 
 describe('j18n', () => {
   describe('#nest', () => {
-    it('should error if no file', (done) => {
+    it('should error if no file', done => {
       const e = `Missing required argument: file`
       exec('j18n nest', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
         done()
       })
     })
-  });
+  })
   describe('#flat', () => {
-    it('should error if no file', (done) => {
+    it('should error if no file', done => {
       const e = `Missing required argument: file`
       exec('j18n flat', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
@@ -39,10 +39,10 @@ describe('j18n', () => {
         unlink(outputFile, done)
       })
     })
-  });
+  })
 
   describe('#options', () => {
-    it('should error if no arg is included with --file', (done) => {
+    it('should error if no arg is included with --file', done => {
       const e = `Not enough arguments following: file`
       exec('j18n flat --file', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
@@ -50,7 +50,7 @@ describe('j18n', () => {
       })
     })
 
-    it('should error if --file does not exist', (done) => {
+    it('should error if --file does not exist', done => {
       const e = `ENOENT: no such file or directory, open 'noExist.json'`
       exec('j18n flat --file noExist.json', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
@@ -58,12 +58,15 @@ describe('j18n', () => {
       })
     })
 
-    it('should error if no arg is included with --output', (done) => {
+    it('should error if no arg is included with --output', done => {
       const e = `Not enough arguments following: output`
-      exec('j18n flat --file test/nested.json --output', (error, stdout, stderr) => {
-        assert.equal(lastLine(stderr), e)
-        done()
-      })
+      exec(
+        'j18n flat --file test/nested.json --output',
+        (error, stdout, stderr) => {
+          assert.equal(lastLine(stderr), e)
+          done()
+        }
+      )
     })
   })
-});
+})
