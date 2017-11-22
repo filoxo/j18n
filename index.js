@@ -11,6 +11,13 @@ const { argv } = require('yargs')
         demandOption: true,
         requiresArg: true,
         nargs: 1
+      },
+      output: {
+        alias: 'o',
+        desc: 'Output filename',
+        requiresArg: true,
+        nargs: 1,
+        type: 'string'
       }
     })
     .help(),
@@ -23,8 +30,9 @@ function main() {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) return console.error(err.message)
     const j = JSON.parse(data)
+    const { output } = argv
     let jt = {},
-      o = file
+      o = output || file
     if (cmd === 'nest') {
       jt = nest(j)
       o = o.replace('.flat', '')
