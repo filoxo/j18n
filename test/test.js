@@ -57,5 +57,13 @@ describe('j18n', () => {
         done()
       })
     })
+
+    it('should error if no arg is included with --output', (done) => {
+      const e = `Not enough arguments following: output`
+      exec('j18n flat --file test/nested.json --output', (error, stdout, stderr) => {
+        assert.equal(lastLine(stderr), e)
+        done()
+      })
+    })
   })
 });
