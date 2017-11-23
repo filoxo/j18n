@@ -92,5 +92,15 @@ describe('j18n', () => {
         }
       )
     })
+
+    it('should output a file with --output arg', done => {
+      const testOutputFilename = `test/myCustomOutput.json`
+      exec(`j18n flat --file test/nested.json --output ${testOutputFilename}`,
+        (error, stdout, stderr) => {
+        assert.equal(firstLine(stdout), `Data written successfully!`)
+        assert(existsSync(testOutputFilename))
+        unlink(testOutputFilename, done)
+      })
+    })
   })
 })
