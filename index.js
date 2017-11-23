@@ -40,12 +40,14 @@ function main() {
       o = output || file
     if (cmd === 'nest') {
       jt = nest(j)
-      o = o.replace('.flat', '')
+      if(!output) { o = o.replace('.flat', '') }
     } else if (cmd === 'flat') {
       jt = flat(j)
-      o = o.split('.')
-      o.splice(o.length - 1, 0, 'flat')
-      o = o.join('.')
+      if(!output) {
+        o = o.split('.')
+        o.splice(o.length - 1, 0, 'flat')
+        o = o.join('.')
+      }
     }
     fs.writeFile(o, JSON.stringify(jt, null, 2), err => {
       return err
