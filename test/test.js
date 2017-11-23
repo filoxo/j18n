@@ -102,5 +102,16 @@ describe('j18n', () => {
         unlink(testOutputFilename, done)
       })
     })
+
+    it('should error if no arg is included with --suffix', done => {
+      const e = `Not enough arguments following: suffix`
+      exec(
+        'j18n flat --file test/nested.json --suffix',
+        (error, stdout, stderr) => {
+          assert.equal(lastLine(stderr), e)
+          done()
+        }
+      )
+    })
   })
 })
