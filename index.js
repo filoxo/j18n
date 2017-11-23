@@ -18,6 +18,13 @@ const { argv } = require('yargs')
         requiresArg: true,
         nargs: 1,
         type: 'string'
+      },
+      suffix: {
+        alias: 's',
+        desc: 'Outputted filename suffix (eg. file.[suffix].json)',
+        requiresArg: true,
+        nargs: 1,
+        type: 'string'
       }
     })
     .help(),
