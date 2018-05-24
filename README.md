@@ -21,17 +21,20 @@ It'll transform a structures like so:
       }
     }
 
-### Usage
+#### Note
 
-    j18n [flat/nest] -f [path]
+This guide uses yarn but all of the commands have an npm equivalent. 
 
-    Options:
-      -f, --file  File to transform                                       [required]
-      --help      Show help                                                [boolean]
+## Contents
+
+- [Usage](#usage)
+- [Naming](#naming)
+- [Installation](#installation)
+- [Development](#development)
 
 ### Installation
 
-1. `npm i -D j18n`
+1. `yarn add -D j18n`
 2. Create npm scripts
 
         "scripts": {
@@ -42,7 +45,7 @@ It'll transform a structures like so:
 3. Run as needed
 
         // from command line
-        npm run json:nest
+        yarn run json:nest
 
         // as a pre- or post- script in package.json
         "scripts": {
@@ -56,3 +59,22 @@ It'll transform a structures like so:
           ...
           "prepush": "npm run json:flat"
         }
+
+### Usage
+
+    j18n [flat/nest] -f [path]
+
+    Options:
+      -f, --file  File to transform                                       [required]
+      --help      Show help                                                [boolean]
+
+### Naming
+
+By default, j18n will not rewrite files in place and will output a separate file with a suffix. j18n will use the action name as the default suffix, or you could provide your own, or you can force rewrite in place.
+
+### Development
+
+- Clone the repo and open the j18n directory
+- Install dependencies (`yarn install`)
+- Link the project (`yarn link`)
+- Run test (`yarn test`)
