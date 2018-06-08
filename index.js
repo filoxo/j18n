@@ -43,27 +43,27 @@ function main() {
   const { file, inPlace, _: [cmd] } = argv
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) return console.error(err.message)
-    let j
+    let json
     try {
-      j = JSON.parse(data)
+      json = JSON.parse(data)
     } catch(e) {
       return console.error(`j18n could not parse the JSON in ${file}\n`, e)
     }
     const { output } = argv
-    let jt = {},
-      o = output || file
+    let transformedJson = {},
+      outputFilename = output || file
     if (cmd === 'nest') {
-      jt = nest(j)
-      if(!output) { o = o.replace('.flat', '') }
+      transformedJson = nest(json)
+      if(!output) { outputFilename = outputFilename.replace('.flat', '') }
     } else if (cmd === 'flat') {
-      jt = flat(j)
+      transformedJson = flat(json)
       if(!output) {
-        o = o.split('.')
-        o.splice(o.length - 1, 0, 'flat')
-        o = o.join('.')
+        outputFilename = outputFilename.split('.')
+        outputFilename.splice(outputFilename.length - 1, 0, 'flat')
+        outputFilename = outputFilename.join('.')
       }
     }
-    fs.writeFile(o, JSON.stringify(jt, null, 2), err => {
+    fs.writeFile(outputFilename, JSON.stringify(transformedJson, null, 2), err => {
       return err
         ? console.error(err)
         : console.log('Data written successfully!')
