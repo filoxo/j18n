@@ -38,9 +38,9 @@ function flat(data) {
   return res
 }
 
-function getSaveToFilename(fileName, suffix, inPlace = false) {
+function getSaveToFilename(fileName, suffix, overwrite = false) {
   let filename = fileName
-  if(!inPlace && suffix) {
+  if(!overwrite && suffix) {
     filename = filename.split('.')
     filename.splice(filename.length - 1, 0, suffix)
     filename = filename.join('.') 

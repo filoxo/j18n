@@ -28,9 +28,9 @@ const { argv } = require('yargs')
         nargs: 1,
         type: 'string'
       },
-      'in-place': {
-        alias: 'i',
-        desc: 'Save file in place',
+      overwrite: {
+        alias: 'ow',
+        desc: 'Overwrite the source file',
         type: 'boolean'
       }
     })
@@ -40,7 +40,8 @@ const { argv } = require('yargs')
 main()
 
 function main() {
-  const { file, inPlace, _: [cmd] } = argv
+  console.log(argv)
+  const { file, _: [cmd] } = argv
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) return console.error(err.message)
     let json
@@ -49,19 +50,13 @@ function main() {
     } catch(e) {
       return console.error(`j18n could not parse the JSON in ${file}\n`, e)
     }
-    const { output } = argv
+    const { output, suffix, overwrite } = argv
     let transformedJson = {},
-      outputFilename = output || file
+      outputFilename = getSaveToFilename(file, suffix || cmd, overwrite)
     if (cmd === 'nest') {
       transformedJson = nest(json)
-      if(!output) { outputFilename = outputFilename.replace('.flat', '') }
     } else if (cmd === 'flat') {
       transformedJson = flat(json)
-      if(!output) {
-        outputFilename = outputFilename.split('.')
-        outputFilename.splice(outputFilename.length - 1, 0, 'flat')
-        outputFilename = outputFilename.join('.')
-      }
     }
     fs.writeFile(outputFilename, JSON.stringify(transformedJson, null, 2), err => {
       return err
