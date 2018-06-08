@@ -27,6 +27,11 @@ const { argv } = require('yargs')
         requiresArg: true,
         nargs: 1,
         type: 'string'
+      },
+      'in-place': {
+        alias: 'i',
+        desc: 'Save file in place',
+        type: 'boolean'
       }
     })
     .help(),
@@ -35,7 +40,7 @@ const { argv } = require('yargs')
 main()
 
 function main() {
-  const { file, _: [cmd] } = argv
+  const { file, inPlace, _: [cmd] } = argv
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) return console.error(err.message)
     let j
@@ -65,4 +70,3 @@ function main() {
     })
   })
 }
-
