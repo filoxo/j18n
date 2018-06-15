@@ -44,6 +44,8 @@ function getSaveToFilename(fileName, suffix, overwrite = false) {
     filename = filename.split('.')
     filename.splice(filename.length - 1, 0, suffix)
     filename = filename.join('.') 
+  } else if(overwrite) {
+    console.info('overwrite option was provided, suffix will be ignored')
   }
   return filename
 }
