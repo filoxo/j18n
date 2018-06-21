@@ -9,10 +9,10 @@ const { argv } = require('yargs')
     .options({
       file: {
         alias: 'f',
-        describe: 'File to transform',
+        describe: 'File(s) to transform',
         demandOption: true,
         requiresArg: true,
-        nargs: 1
+        array: true
       },
       output: {
         alias: 'o',
@@ -42,26 +42,28 @@ main()
 function main() {
   console.log(argv)
   const { file, _: [cmd] } = argv
-  fs.readFile(file, 'utf8', (err, data) => {
-    if (err) return console.error(err.message)
-    let json
-    try {
-      json = JSON.parse(data)
-    } catch(e) {
-      return console.error(`j18n could not parse the JSON in ${file}\n`, e)
-    }
-    const { output, suffix, overwrite } = argv
-    let transformedJson = {},
-      outputFilename = getSaveToFilename(file, suffix || cmd, overwrite)
-    if (cmd === 'nest') {
-      transformedJson = nest(json)
-    } else if (cmd === 'flat') {
-      transformedJson = flat(json)
-    }
-    fs.writeFile(outputFilename, JSON.stringify(transformedJson, null, 2), err => {
-      return err
-        ? console.error(err)
-        : console.log('Data written successfully!')
+  files.forEach(f => {
+    fs.readFile(f, 'utf8', (err, data) => {
+      if (err) return console.error(err.message)
+      let json
+      try {
+        json = JSON.parse(data)
+      } catch(e) {
+        return console.error(`j18n could not parse the JSON in ${file}\n`, e)
+      }
+      const { output, suffix, overwrite } = argv
+      let transformedJson = {},
+        outputFilename = getSaveToFilename(file, suffix || cmd, overwrite)
+      if (cmd === 'nest') {
+        transformedJson = nest(json)
+      } else if (cmd === 'flat') {
+        transformedJson = flat(json)
+      }
+      fs.writeFile(outputFilename, JSON.stringify(transformedJson, null, 2), err => {
+        return err
+          ? console.error(err)
+          : console.log('Data written successfully!')
+      })
     })
   })
 }
