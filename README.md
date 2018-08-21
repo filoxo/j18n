@@ -65,12 +65,15 @@ This guide uses yarn but all of the commands have an npm equivalent.
     j18n [flat/nest] -f [path]
 
     Options:
-      -f, --file  File to transform                                       [required]
-      --help      Show help                                                [boolean]
+      --file, -f         File(s) to transform                     [array] [required]
+      --output, -o       Output filename                                    [string]
+      --suffix, -s       Outputted filename suffix (eg. file.[suffix].json) [string]
+      --overwrite, --ow  Overwrite the source file                         [boolean]
+      --help             Show help                                         [boolean]
 
-### Naming
+### Output Naming
 
-By default, j18n will not rewrite files in place and will output a separate file with a suffix. j18n will use the action name as the default suffix, or you could provide your own, or you can force rewrite in place.
+By default, j18n will not rewrite files in place and will output a separate file with a suffix. j18n will use the action name as the default suffix, or you could provide your own, or you can force overwriting the file in place.
 
 ### Development
 
