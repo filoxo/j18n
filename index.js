@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+const { nest, flat, getSaveToFilename } = require('./main.js')
+
 const { argv } = require('yargs')
     .usage('Usage: j18n nest -f [file]')
     .command('flat', 'Flatten json key structures')
@@ -7,10 +9,10 @@ const { argv } = require('yargs')
     .options({
       file: {
         alias: 'f',
-        describe: 'File to transform',
+        describe: 'File(s) to transform',
         demandOption: true,
         requiresArg: true,
-        nargs: 1
+        array: true
       },
       output: {
         alias: 'o',
@@ -25,6 +27,11 @@ const { argv } = require('yargs')
         requiresArg: true,
         nargs: 1,
         type: 'string'
+      },
+      overwrite: {
+        alias: 'ow',
+        desc: 'Overwrite the source file',
+        type: 'boolean'
       }
     })
     .help(),
@@ -33,72 +40,30 @@ const { argv } = require('yargs')
 main()
 
 function main() {
+  console.log(argv)
   const { file, _: [cmd] } = argv
-  fs.readFile(file, 'utf8', (err, data) => {
-    if (err) return console.error(err.message)
-    let j
-    try {
-      j = JSON.parse(data)
-    } catch(e) {
-      return console.error(`j18n could not parse the JSON in ${file}\n`, e)
-    }
-    const { output } = argv
-    let jt = {},
-      o = output || file
-    if (cmd === 'nest') {
-      jt = nest(j)
-      if(!output) { o = o.replace('.flat', '') }
-    } else if (cmd === 'flat') {
-      jt = flat(j)
-      if(!output) {
-        o = o.split('.')
-        o.splice(o.length - 1, 0, 'flat')
-        o = o.join('.')
+  files.forEach(f => {
+    fs.readFile(f, 'utf8', (err, data) => {
+      if (err) return console.error(err.message)
+      let json
+      try {
+        json = JSON.parse(data)
+      } catch(e) {
+        return console.error(`j18n could not parse the JSON in ${file}\n`, e)
       }
-    }
-    fs.writeFile(o, JSON.stringify(jt, null, 2), err => {
-      return err
-        ? console.error(err)
-        : console.log('Data written successfully!')
+      const { output, suffix, overwrite } = argv
+      let transformedJson = {},
+        outputFilename = getSaveToFilename(file, suffix || cmd, overwrite)
+      if (cmd === 'nest') {
+        transformedJson = nest(json)
+      } else if (cmd === 'flat') {
+        transformedJson = flat(json)
+      }
+      fs.writeFile(outputFilename, JSON.stringify(transformedJson, null, 2), err => {
+        return err
+          ? console.error(err)
+          : console.log('Data written successfully!')
+      })
     })
   })
-}
-
-function nest(data) {
-  if (Object(data) !== data || Array.isArray(data)) return data
-  const regex = /\.?([^.\[\]]+)|\[(\d+)\]/g
-  let res = {}
-  for (var p in data) {
-    let cur = res,
-      prop = '',
-      m
-    while ((m = regex.exec(p))) {
-      cur = cur[prop] || (cur[prop] = m[2] ? [] : {})
-      prop = m[2] || m[1]
-    }
-    cur[prop] = data[p]
-  }
-  return res[''] || res
-}
-
-function flat(data) {
-  let res = {}
-  function f(cur, prop) {
-    if (Object(cur) !== cur) {
-      res[prop] = cur
-    } else if (Array.isArray(cur)) {
-      for (let i = 0, l = cur.length; i < l; i++)
-        f(cur[i], prop + '[' + i + ']')
-      if (l == 0) res[prop] = []
-    } else {
-      var isEmpty = true
-      for (var p in cur) {
-        isEmpty = false
-        f(cur[p], prop ? prop + '.' + p : p)
-      }
-      if (isEmpty && prop) res[prop] = {}
-    }
-  }
-  f(data, '')
-  return res
 }
