@@ -48,7 +48,7 @@ function main() {
       try {
         json = JSON.parse(data)
       } catch(e) {
-        return console.error(`j18n could not parse the JSON in ${file}\n`, e)
+        return console.error(`j18n could not parse the JSON in ${f}\n`, e)
       }
       const { output, suffix, overwrite } = argv
       let transformedJson = {},
