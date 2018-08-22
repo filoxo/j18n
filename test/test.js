@@ -43,7 +43,7 @@ describe('j18n', () => {
 
   describe('#options', () => {
     it('should error if no arg is included with --file', done => {
-      const e = `Missing argument value: file`
+      const e = `Not enough arguments following: file`
       exec('j18n flat --file', (error, stdout, stderr) => {
         assert.equal(lastLine(stderr), e)
         done()
