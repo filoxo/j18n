@@ -10,6 +10,9 @@ describe('j18n units', () => {
     it('should not modify filename if saved in place', () => {
       assert.equal(getSaveToFilename('test.json', 'nest', true), 'test.json')
     })
+    it('should use the provided suffix', () => {
+      assert.equal(getSaveToFilename('test.json', 'anidada'), 'test.anidada.json')
+    })
   })
 
   describe('#nest', () => {
