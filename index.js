@@ -40,9 +40,8 @@ const { argv } = require('yargs')
 main()
 
 function main() {
-  console.log(argv)
   const { file, _: [cmd] } = argv
-  files.forEach(f => {
+  file.forEach(f => {
     fs.readFile(f, 'utf8', (err, data) => {
       if (err) return console.error(err.message)
       let json
@@ -53,7 +52,7 @@ function main() {
       }
       const { output, suffix, overwrite } = argv
       let transformedJson = {},
-        outputFilename = getSaveToFilename(file, suffix || cmd, overwrite)
+        outputFilename = output || getSaveToFilename(f, suffix || cmd, overwrite)
       if (cmd === 'nest') {
         transformedJson = nest(json)
       } else if (cmd === 'flat') {
